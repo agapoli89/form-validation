@@ -8,6 +8,7 @@ class App extends Component {
     email: "",
     pass: "",
     accept: false,
+    message: "",
     errors: {
       username: false,
       email: false,
@@ -53,6 +54,7 @@ class App extends Component {
         email: "",
         pass: "",
         accept: false,
+        message: "Fromularz został wysłany",
         errors: {
           username: false,
           email: false,
@@ -107,28 +109,39 @@ class App extends Component {
       accept
     })
   }
+
+  componentDidUpdate() {
+    if (this.state.message !== '') {
+      setTimeout(() => this.setState({
+        message: '',
+      }), 3000);
+    }
+  }
   
   render() { 
     return ( 
-      <form className="App" onSubmit={this.handleSubmit} noValidate>
-      <label htmlFor="user">Twoje imię:  
-        <input type="text" id="user" name="username" value={this.state.username} onChange={this.handleChange}/>
-        {this.state.errors.username && <span>{this.messages.username_incorrect}</span>}
-      </label>
-      <label htmlFor="email">Twój adres email:  
-        <input type="email" id="email" name="email" value={this.state.email} onChange={this.handleChange}/>
-        {this.state.errors.email && <span>{this.messages.email_incorrect}</span>}
-      </label>
-      <label htmlFor="password">Twoje hasło:  
-        <input type="password" id="password" name="pass" value={this.state.pass} onChange={this.handleChange}/>
-        {this.state.errors.pass && <span>{this.messages.pass_incorrect}</span>}
-      </label>
-      <label htmlFor="accept">
-        <input type="checkbox" id="accept" name="accept" checked={this.state.accept} onChange={this.handleChange}/> Wyrażam zgodę na wszystko
-      </label>
-      {this.state.errors.accept && <span>{this.messages.accept_incorrect}</span>}
-      <button>Zapisz się</button>
-    </form>
+      <>
+        <form className="App" onSubmit={this.handleSubmit} noValidate>
+          <label htmlFor="user">Twoje imię:  
+            <input type="text" id="user" name="username" value={this.state.username} onChange={this.handleChange}/>
+            {this.state.errors.username && <span>{this.messages.username_incorrect}</span>}
+          </label>
+          <label htmlFor="email">Twój adres email:  
+            <input type="email" id="email" name="email" value={this.state.email} onChange={this.handleChange}/>
+            {this.state.errors.email && <span>{this.messages.email_incorrect}</span>}
+          </label>
+          <label htmlFor="password">Twoje hasło:  
+            <input type="password" id="password" name="pass" value={this.state.pass} onChange={this.handleChange}/>
+            {this.state.errors.pass && <span>{this.messages.pass_incorrect}</span>}
+          </label>
+          <label htmlFor="accept">
+            <input type="checkbox" id="accept" name="accept" checked={this.state.accept} onChange={this.handleChange}/> Wyrażam zgodę na wszystko
+          </label>
+          {this.state.errors.accept && <span>{this.messages.accept_incorrect}</span>}
+          <button>Zapisz się</button>
+        </form>
+        {this.state.message && <h3>{this.state.message}</h3>}
+    </>
     );
   }
 }
